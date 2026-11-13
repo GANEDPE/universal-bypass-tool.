@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090912">
+  <meta name="description" content="Universal Bypass Tool — phân tích URL và theo dõi chuyển hướng HTTP hợp lệ.">
+  <title>UNIVERSAL BYPASS TOOL</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080811;--panel:#11111f;--panel2:#17172a;--line:#292943;--muted:#a2a1bd;--text:#f6f4ff;--purple:#9b5cff;--pink:#d34bff;--good:#52dfad;--warn:#ffc66e;--bad:#ff7385}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#35205b 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+    .wrap{width:min(960px,calc(100% - 28px));margin:0 auto;padding:34px 0 50px}
+    header{text-align:center;margin:10px 0 26px}.logo{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border:1px solid #7542b7;border-radius:17px;background:linear-gradient(145deg,#28144a,#11111f);box-shadow:0 0 35px #9b5cff33;font-size:25px}
+    h1{font-size:clamp(25px,5vw,38px);letter-spacing:.07em;margin:13px 0 3px;background:linear-gradient(90deg,#c69cff,#fff,#d77cff);color:transparent;background-clip:text}
+    .sub{color:var(--muted);margin:0}.pill{display:inline-flex;border:1px solid #49346b;border-radius:99px;padding:5px 11px;color:#d7c0ff;font-size:12px;margin-top:12px;background:#211632}
+    .layout{display:grid;grid-template-columns:1.35fr .8fr;gap:16px}.card{background:linear-gradient(160deg,#151525,#0e0e19);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 18px 50px #0005}
+    h2{font-size:16px;margin:0 0 15px;letter-spacing:.04em}.field-label{display:block;color:#c5b5e9;font-size:12px;font-weight:750;letter-spacing:.08em;margin:17px 0 8px}
+    textarea,input{width:100%;border:1px solid #373752;border-radius:13px;background:#090914;color:var(--text);padding:14px;font:inherit;outline:none;transition:.2s}
+    textarea{min-height:122px;resize:vertical}input:focus,textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px #9b5cff20}
+    .hint{color:var(--muted);font-size:12px;margin:7px 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+    button{border:0;border-radius:12px;padding:12px 17px;font:700 14px inherit;cursor:pointer;color:white;background:#292943;transition:.18s}
+    button:hover{filter:brightness(1.15);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:wait;transform:none}
+    .primary{background:linear-gradient(100deg,#7134d7,#b044ec);box-shadow:0 8px 25px #963ee544;flex:1;min-width:170px}.secondary{border:1px solid #393956;background:#1b1b2d}
+    .status{margin-top:14px;padding:11px 13px;border-radius:12px;background:#19192a;color:var(--muted);font-size:13px;display:none}.status.show{display:block}.status.good{color:var(--good);border:1px solid #235b4a}.status.warn{color:var(--warn);border:1px solid #70552d}.status.bad{color:var(--bad);border:1px solid #71313e}
+    .result{margin-top:17px;display:none}.result.show{display:block}.result-url{overflow-wrap:anywhere;background:#090914;border:1px solid #33334c;padding:13px;border-radius:12px;margin:8px 0}.result-url a{color:#cdaaff}
+    .steps{margin:12px 0 0;padding:0;list-style:none}.steps li{border-left:2px solid #7650a8;padding:2px 0 12px 13px;margin-left:5px;color:#d5d1e8;font-size:13px;overflow-wrap:anywhere}.steps li:last-child{border-left-color:transparent}
+    .side p{color:var(--muted);font-size:13px}.feature{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #28283d}.feature:last-child{border:0}.ico{width:32px;height:32px;flex:none;border-radius:10px;background:#281a3c;display:grid;place-items:center}
+    .feature b{font-size:13px}.feature small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    .history{margin-top:16px}.history-head{display:flex;justify-content:space-between;align-items:center}.history-list{display:grid;gap:8px}.history-item{padding:10px 12px;border:1px solid #2b2b43;border-radius:11px;color:#d7d2e8;font-size:12px;overflow-wrap:anywhere;cursor:pointer}.history-item:hover{border-color:#8554bd}
+    footer{text-align:center;color:#77758e;font-size:11px;margin:22px 0 0}.footnote{color:#aaa7bd;font-size:12px;margin-top:16px;border-top:1px solid #2a2a40;padding-top:14px}
+    @media(max-width:720px){.layout{grid-template-columns:1fr}.wrap{padding-top:22px}.card{padding:18px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">↗</div>
+    <h1>UNIVERSAL BYPASS TOOL</h1>
+    <p class="sub">Link Resolver · Auto Redirect · URL Inspector</p>
+    <span class="pill">DARK EDITION • VIETNAMESE</span>
+  </header>
+  <main class="layout">
+    <section class="card">
+      <h2>✦ PHÂN TÍCH LIÊN KẾT</h2>
+      <label class="field-label" for="url">DÁN URL CẦN KIỂM TRA</label>
+      <textarea id="url" placeholder="https://example.com/short-link" spellcheck="false"></textarea>
+      <p class="hint">Có thể nhập một URL. Chỉ xử lý HTTP/HTTPS; không nhập mật khẩu, mã OTP hoặc liên kết riêng tư.</p>
+      <div class="actions">
+        <button class="primary" id="resolve">⌁ PHÂN TÍCH / AUTO REDIRECT</button>
+        <button class="secondary" id="paste">DÁN</button>
+        <button class="secondary" id="clear">XÓA</button>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div id="result" class="result">
+        <label class="field-label">URL CUỐI CÙNG (NẾU XÁC ĐỊNH ĐƯỢC)</label>
+        <div id="finalUrl" class="result-url"></div>
+        <div class="actions"><button class="secondary" id="copy">SAO CHÉP URL</button><button class="secondary" id="open">MỞ URL</button></div>
+        <label class="field-label">LỊCH SỬ CHUYỂN HƯỚNG</label>
+        <ol id="steps" class="steps"></ol>
+      </div>
+      <div class="footnote">Auto Redirect chỉ theo dõi các chuyển hướng HTTP công khai (301/302/303/307/308). Không vượt CAPTCHA, đăng nhập, thanh toán, quảng cáo bắt buộc hoặc cơ chế kiểm soát truy cập.</div>
+    </section>
+    <aside>
+      <section class="card side">
+        <h2>✧ TÍNH NĂNG</h2>
+        <div class="feature"><span class="ico">🔎</span><div><b>Universal Link Resolver</b><small>Kiểm tra URL và xác định đích chuyển hướng.</small></div></div>
+        <div class="feature"><span class="ico">⚡</span><div><b>Auto Redirect</b><small>Tự động theo các phản hồi chuyển hướng HTTP hợp lệ.</small></div></div>
+        <div class="feature"><span class="ico">🧭</span><div><b>Redirect Trace</b><small>Hiển thị từng chặng để bạn kiểm tra trước khi mở.</small></div></div>
+        <div class="feature"><span class="ico">🛡️</span><div><b>Safe by design</b><small>Chặn URL nội bộ và giới hạn số lần chuyển hướng.</small></div></div>
+        <p>Để bật xử lý liên kết, hãy triển khai Cloudflare Worker và nhập URL Worker vào cấu hình bên dưới.</p>
+        <label class="field-label" for="endpoint">CLOUDFLARE WORKER API</label>
+        <input id="endpoint" placeholder="https://your-worker.example.workers.dev">
+        <p class="hint">Được lưu cục bộ trên trình duyệt của thiết bị này.</p>
+      </section>
+      <section class="card history">
+        <div class="history-head"><h2>◷ LỊCH SỬ GẦN ĐÂY</h2><button class="secondary" id="clearHistory">XÓA</button></div>
+        <div id="history" class="history-list"><p class="hint">Chưa có lịch sử.</p></div>
+      </section>
+    </aside>
+  </main>
+  <footer>UNIVERSAL BYPASS TOOL · Community safety first</footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let currentFinal = "";
+const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
+const save = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+$("endpoint").value = localStorage.getItem("ubt_endpoint") || "";
+$("endpoint").addEventListener("change", () => localStorage.setItem("ubt_endpoint", $("endpoint").value.trim()));
+function setStatus(message, kind="") { $("status").textContent=message; $("status").className="status show "+kind; }
+function validUrl(raw) { let u; try { u=new URL(raw.trim()); } catch { throw new Error("URL không hợp lệ. Hãy nhập đầy đủ https:// hoặc http://."); } if(!["http:","https:"].includes(u.protocol)) throw new Error("Chỉ hỗ trợ URL HTTP/HTTPS."); if(u.username || u.password) throw new Error("Không chấp nhận URL chứa thông tin đăng nhập."); return u.href; }
+function renderHistory(){ const items=read("ubt_history",[]); const host=$("history"); host.innerHTML=""; if(!items.length){host.innerHTML='<p class="hint">Chưa có lịch sử.</p>';return;} items.slice(0,6).forEach(x=>{const d=document.createElement("div");d.className="history-item";d.textContent=x.final||x.input;d.title=x.input;d.addEventListener("click",()=>{$("url").value=x.input;});host.append(d);});}
+function showResult(data,input){ currentFinal=data.finalUrl||data.final||input; $("finalUrl").replaceChildren(); const a=document.createElement("a");a.href=currentFinal;a.target="_blank";a.rel="noopener noreferrer";a.textContent=currentFinal;$("finalUrl").append(a); const list=$("steps");list.innerHTML="";(data.steps||[input,currentFinal]).forEach((s,i)=>{const li=document.createElement("li");li.textContent=(i+1)+". "+s;list.append(li);});$("result").classList.add("show");const items=read("ubt_history",[]);items.unshift({input,final:currentFinal,at:Date.now()});save("ubt_history",items.slice(0,20));renderHistory();}
+async function resolve(){ $("result").classList.remove("show");let input;try{input=validUrl($("url").value);}catch(e){setStatus(e.message,"bad");return;}const endpoint=$("endpoint").value.trim();if(!endpoint){setStatus("Chưa cấu hình Worker API. Hãy triển khai thư mục cloudflare-worker rồi dán URL Worker vào ô cấu hình. Front-end chưa thể tự truy cập xuyên miền do giới hạn bảo mật trình duyệt.","warn");return;}let api;try{api=new URL(endpoint);if(!["https:"].includes(api.protocol))throw 0;}catch{setStatus("Worker endpoint phải là URL HTTPS hợp lệ.","bad");return;}
+$("resolve").disabled=true;setStatus("Đang kiểm tra chuỗi chuyển hướng…");try{const response=await fetch(api.href.replace(/\/$/,"")+"/api/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:input})});const data=await response.json().catch(()=>({error:"Phản hồi máy chủ không phải JSON."}));if(!response.ok)throw new Error(data.error||"Worker trả về lỗi "+response.status);showResult(data,input);setStatus(data.note||"Đã hoàn tất phân tích chuyển hướng HTTP.","good");}catch(e){setStatus(e.message+" Nếu trang yêu cầu JavaScript, CAPTCHA hoặc đăng nhập, công cụ không thể tự xử lý bước đó.","warn");}finally{$("resolve").disabled=false;}}
+$("resolve").addEventListener("click",resolve);
+$("paste").addEventListener("click",async()=>{try{$("url").value=await navigator.clipboard.readText();setStatus("Đã dán URL từ clipboard.");}catch{setStatus("Trình duyệt chưa cấp quyền clipboard. Hãy dán thủ công.","warn");}});
+$("clear").addEventListener("click",()=>{$("url").value="";$("result").classList.remove("show");$("status").className="status";});
+$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(currentFinal);setStatus("Đã sao chép URL đích.","good");}catch{setStatus("Không thể sao chép tự động trên trình duyệt này.","warn");}});
+$("open").addEventListener("click",()=>{if(currentFinal)window.open(currentFinal,"_blank","noopener,noreferrer");});
+$("clearHistory").addEventListener("click",()=>{save("ubt_history",[]);renderHistory();});
+renderHistory();
+</script>
+</body>
+</html>
